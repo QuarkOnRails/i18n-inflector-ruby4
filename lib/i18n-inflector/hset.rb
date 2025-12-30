@@ -16,10 +16,10 @@ module I18n
 
       # This method performs a fast check
       # if an element exists in a set.
-      # 
+      #
       # @return [Boolean]
       def [](k)
-        @hash[k] == true
+        include?(k)
       end
 
     end

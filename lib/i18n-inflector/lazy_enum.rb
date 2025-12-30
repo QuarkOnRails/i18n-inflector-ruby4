@@ -113,7 +113,7 @@ module I18n
       def map(&block)
         self.class.new do |yielder|
           each do |v|
-            yielder << block[v]
+            yielder << block.call(v)
           end
         end
       end
@@ -123,7 +123,7 @@ module I18n
       def select(&block)
         self.class.new do |yielder|
           each do |v|
-            yielder << v if block[v]
+            yielder << v if block.call(v)
           end
         end
       end
@@ -133,7 +133,7 @@ module I18n
       def reject(&block)
         self.class.new do |yielder|
           each do |v|
-            yielder << v unless block[v]
+            yielder << v unless block.call(v)
           end
         end
       end
@@ -197,7 +197,7 @@ module I18n
       def map(&block)
         LazyHashEnumerator.new do |yielder|
           each do |k,v|
-            yielder.yield(k,block[k,v])
+            yielder.yield(k, block.call(k, v))
           end
         end
       end
@@ -207,7 +207,7 @@ module I18n
       def ary_map(&block)
         LazyHashEnumerator.new do |yielder|
           each do |value|
-            yielder << block[value]
+            yielder << block.call(value)
           end
         end
       end
@@ -253,7 +253,7 @@ module I18n
       def select(&block)
         self.class.new do |yielder|
           each do |k,v|
-            yielder.yield(k,v) if block[k,v]
+            yielder.yield(k, v) if block.call(k, v)
           end
         end
       end
@@ -263,7 +263,7 @@ module I18n
       def reject(&block)
         self.class.new do |yielder|
           each do |k,v|
-            yielder.yield(k,v) unless block[k,v]
+            yielder.yield(k, v) unless block.call(k, v)
           end
         end
       end
